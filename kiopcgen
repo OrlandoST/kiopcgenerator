@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 # vim: ts=4
 ###
@@ -17,9 +17,13 @@ parser = OptionParser()
 parser.add_option("-o", "--op", dest="op", help="32 char OP key")
 parser.add_option("-t", "--transport", dest="trans", help="32 char Transport key")
 parser.add_option("-k", "--ki", dest="ki", help="Optional 32 char Ki key (to avoid random generation)")
+parser.add_option("-e", "--encryptedki", dest="eki", help="Optional 32 char encrypted Ki key (will be decrypted before OPC generation)")
 (options, args) = parser.parse_args()
 
 if options.op and options.trans:
+    if options.eki:
+        options.ki = kiopcgenerator.aes_128_cbc_decrypt(options.trans, options.eki)
+
     if not options.ki:
         options.ki = kiopcgenerator.gen_ki()
 

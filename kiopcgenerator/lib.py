@@ -64,6 +64,16 @@ def aes_128_cbc_encrypt(key, text):
     ciphertext = encryptor.encrypt(textb)
     return ciphertext.hex().upper()
 
+def aes_128_cbc_decrypt(key, text):
+    """
+    implements aes 128b deryption with cbc.
+    """
+    keyb = binascii.unhexlify(key)
+    textb = binascii.unhexlify(text)
+    encryptor = AES.new(keyb, AES.MODE_CBC, IV=IV)
+    ciphertext = encryptor.decrypt(textb)
+    return ciphertext.hex().upper()
+
 def gen_ki():
     """
     Clear ki random generator
